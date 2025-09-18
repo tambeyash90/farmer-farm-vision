@@ -1,323 +1,300 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import { 
-  Leaf, 
-  Droplets, 
-  Thermometer, 
   TrendingUp, 
-  MessageCircle, 
-  Bug, 
-  Cloud, 
   Users, 
-  Bell, 
+  DollarSign, 
+  Target, 
+  BarChart3, 
   Settings,
-  BarChart3,
-  Camera,
-  AlertTriangle,
-  CheckCircle,
+  Bell,
+  Search,
+  Plus,
+  ExternalLink,
+  ArrowUpRight,
   Activity
 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const [notifications] = useState([
-    { id: 1, type: "warning", message: "Low soil moisture detected in Field A", time: "2 hours ago" },
-    { id: 2, type: "success", message: "Optimal growing conditions in Field B", time: "4 hours ago" },
-    { id: 3, type: "info", message: "Weather alert: Rain expected tomorrow", time: "6 hours ago" }
-  ]);
-
-  const soilData = {
-    ph: 6.8,
-    moisture: 45,
-    nitrogen: 78,
-    phosphorus: 65,
-    potassium: 72
-  };
-
-  const features = [
+  const stats = [
     {
-      title: "Soil Analytics",
-      description: "Real-time IoT sensor data from your fields",
+      title: "Total Revenue",
+      value: "$47,329",
+      change: "+12.5%",
+      icon: DollarSign,
+      color: "text-green-600"
+    },
+    {
+      title: "Active Campaigns",
+      value: "24",
+      change: "+3",
+      icon: Target,
+      color: "text-blue-600"
+    },
+    {
+      title: "Total Clicks",
+      value: "156,845",
+      change: "+8.2%",
       icon: Activity,
-      status: "active",
-      color: "bg-success/10 text-success",
-      content: (
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-4 bg-muted/30 rounded-lg">
-              <div className="text-2xl font-bold text-primary">{soilData.ph}</div>
-              <div className="text-sm text-muted-foreground">pH Level</div>
-            </div>
-            <div className="text-center p-4 bg-muted/30 rounded-lg">
-              <div className="text-2xl font-bold text-primary">{soilData.moisture}%</div>
-              <div className="text-sm text-muted-foreground">Moisture</div>
-            </div>
-          </div>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-sm">Nitrogen</span>
-              <span className="text-sm font-medium">{soilData.nitrogen}%</span>
-            </div>
-            <Progress value={soilData.nitrogen} className="h-2" />
-            <div className="flex justify-between items-center">
-              <span className="text-sm">Phosphorus</span>
-              <span className="text-sm font-medium">{soilData.phosphorus}%</span>
-            </div>
-            <Progress value={soilData.phosphorus} className="h-2" />
-            <div className="flex justify-between items-center">
-              <span className="text-sm">Potassium</span>
-              <span className="text-sm font-medium">{soilData.potassium}%</span>
-            </div>
-            <Progress value={soilData.potassium} className="h-2" />
-          </div>
-        </div>
-      )
+      color: "text-purple-600"
     },
     {
-      title: "Price Predictions",
-      description: "AI-powered market forecasting",
+      title: "Conversion Rate",
+      value: "3.2%",
+      change: "+0.4%",
       icon: TrendingUp,
-      status: "trending",
-      color: "bg-warning/10 text-warning",
-      content: (
-        <div className="space-y-4">
-          <div className="text-center p-4 gradient-subtle rounded-lg">
-            <div className="text-2xl font-bold text-primary">₹2,450</div>
-            <div className="text-sm text-muted-foreground">Predicted price per quintal</div>
-            <Badge className="mt-2 bg-success/10 text-success">+12% this week</Badge>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            Based on weather conditions, market demand, and historical data analysis.
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Weather Intelligence",
-      description: "7-day forecast with farming insights",
-      icon: Cloud,
-      status: "updated",
-      color: "bg-primary/10 text-primary",
-      content: (
-        <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="p-2 bg-muted/30 rounded">
-              <div className="text-lg">☀️</div>
-              <div className="text-xs">Today</div>
-              <div className="text-xs">28°C</div>
-            </div>
-            <div className="p-2 bg-muted/30 rounded">
-              <div className="text-lg">🌧️</div>
-              <div className="text-xs">Tomorrow</div>
-              <div className="text-xs">25°C</div>
-            </div>
-            <div className="p-2 bg-muted/30 rounded">
-              <div className="text-lg">⛅</div>
-              <div className="text-xs">Wed</div>
-              <div className="text-xs">26°C</div>
-            </div>
-          </div>
-          <div className="p-3 bg-warning/5 border border-warning/20 rounded-lg">
-            <div className="text-sm font-medium text-warning">Rain Alert</div>
-            <div className="text-xs text-muted-foreground">Heavy rain expected tomorrow. Consider covering sensitive crops.</div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Smart Assistant",
-      description: "AI chatbot for farming guidance",
-      icon: MessageCircle,
-      status: "available",
-      color: "bg-accent/10 text-accent"
-    },
-    {
-      title: "Pest Management",
-      description: "Pesticide suggestions & natural alternatives",
-      icon: Bug,
-      status: "monitoring",
-      color: "bg-destructive/10 text-destructive"
-    },
-    {
-      title: "Farmer Network",
-      description: "Connect with local farming community",
-      icon: Users,
-      status: "active",
-      color: "bg-secondary/30 text-secondary-foreground"
+      color: "text-orange-600"
     }
   ];
 
-  const handleFeatureClick = (title: string) => {
-    toast({
-      title: `Opening ${title}`,
-      description: "This feature will be available soon with full functionality.",
-    });
-  };
+  const campaigns = [
+    {
+      name: "Summer Sale 2024",
+      status: "Active",
+      revenue: "$12,450",
+      clicks: 45621,
+      conversions: 1456,
+      ctr: "3.2%"
+    },
+    {
+      name: "Black Friday Preview",
+      status: "Paused",
+      revenue: "$8,330",
+      clicks: 28453,
+      conversions: 892,
+      ctr: "3.1%"
+    },
+    {
+      name: "Holiday Collection",
+      status: "Active",
+      revenue: "$15,670",
+      clicks: 52341,
+      conversions: 1789,
+      ctr: "3.4%"
+    }
+  ];
+
+  const offers = [
+    {
+      title: "Premium E-commerce Platform",
+      commission: "40%",
+      payout: "$200",
+      category: "Software",
+      trending: true
+    },
+    {
+      title: "Fitness Supplement Bundle",
+      commission: "25%",
+      payout: "$75",
+      category: "Health",
+      trending: false
+    },
+    {
+      title: "Online Course Marketing",
+      commission: "50%",
+      payout: "$150",
+      category: "Education",
+      trending: true
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-40">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 gradient-leaf rounded-xl flex items-center justify-center">
-                <Leaf className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Farm Dashboard</h1>
-                <p className="text-sm text-muted-foreground">Welcome back, John Farmer</p>
-              </div>
+      <header className="border-b border-border bg-background/95 backdrop-blur-sm sticky top-0 z-50">
+        <div className="flex h-16 items-center px-6">
+          <Link to="/" className="flex items-center space-x-2">
+            <TrendingUp className="h-6 w-6 text-accent" />
+            <span className="font-bold text-lg">AffiliPro</span>
+          </Link>
+          
+          <div className="ml-auto flex items-center space-x-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <input 
+                type="search"
+                placeholder="Search campaigns..."
+                className="pl-9 pr-4 py-2 w-64 rounded-md border border-input bg-background text-sm"
+              />
             </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" className="relative">
-                <Bell className="w-4 h-4 mr-2" />
-                Alerts
-                <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 bg-destructive text-destructive-foreground text-xs flex items-center justify-center">
-                  3
-                </Badge>
-              </Button>
-              <Button variant="ghost" size="sm">
-                <Settings className="w-4 h-4 mr-2" />
-                Settings
-              </Button>
-            </div>
+            <Button variant="outline" size="sm">
+              <Bell className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="sm">
+              <Settings className="h-4 w-4" />
+            </Button>
+            <Button size="sm" className="accent-button">
+              <Plus className="h-4 w-4 mr-1" />
+              New Campaign
+            </Button>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-6 py-8">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="feature-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Active Fields</p>
-                  <p className="text-2xl font-bold text-primary">4</p>
-                </div>
-                <div className="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center">
-                  <Activity className="w-6 h-6 text-success" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="feature-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Avg Soil Health</p>
-                  <p className="text-2xl font-bold text-primary">87%</p>
-                </div>
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Droplets className="w-6 h-6 text-primary" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="feature-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Weather Score</p>
-                  <p className="text-2xl font-bold text-primary">Good</p>
-                </div>
-                <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                  <Cloud className="w-6 h-6 text-accent" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="feature-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Predicted Yield</p>
-                  <p className="text-2xl font-bold text-primary">+15%</p>
-                </div>
-                <div className="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-warning" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="p-6 space-y-6">
+        {/* Welcome Section */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground mt-1">Welcome back! Here's your performance overview.</p>
+          </div>
+          <div className="flex space-x-3 mt-4 md:mt-0">
+            <Button variant="outline">Export Report</Button>
+            <Button className="cta-button">View Analytics</Button>
+          </div>
         </div>
 
-        {/* Notifications */}
-        <Card className="mb-8 shadow-soft">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bell className="w-5 h-5" />
-              Recent Alerts
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {notifications.map((notification) => (
-                <div key={notification.id} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                  <div className="mt-0.5">
-                    {notification.type === "warning" && <AlertTriangle className="w-4 h-4 text-warning" />}
-                    {notification.type === "success" && <CheckCircle className="w-4 h-4 text-success" />}
-                    {notification.type === "info" && <Bell className="w-4 h-4 text-primary" />}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-foreground">{notification.message}</p>
-                    <p className="text-xs text-muted-foreground">{notification.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <Card 
-              key={index} 
-              className="feature-card cursor-pointer group"
-              onClick={() => handleFeatureClick(feature.title)}
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${feature.color} group-hover:scale-110 transition-spring`}>
-                    <feature.icon className="w-6 h-6" />
-                  </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {feature.status}
-                  </Badge>
-                </div>
-                <CardTitle className="text-lg">{feature.title}</CardTitle>
-                <CardDescription>{feature.description}</CardDescription>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, index) => (
+            <Card key={index} className="feature-card">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  {stat.title}
+                </CardTitle>
+                <stat.icon className={`h-4 w-4 ${stat.color}`} />
               </CardHeader>
-              {feature.content && (
-                <>
-                  <Separator className="mx-6" />
-                  <CardContent className="pt-4">
-                    {feature.content}
-                  </CardContent>
-                </>
-              )}
-              {!feature.content && (
-                <CardContent>
-                  <Button variant="outline" className="w-full group-hover:bg-primary/5 group-hover:border-primary/30">
-                    Open {feature.title}
-                  </Button>
-                </CardContent>
-              )}
+              <CardContent>
+                <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                <p className={`text-xs ${stat.color} font-medium`}>
+                  {stat.change} from last month
+                </p>
+              </CardContent>
             </Card>
           ))}
         </div>
-      </main>
+
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Active Campaigns */}
+          <div className="lg:col-span-2">
+            <Card className="shadow-soft">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Active Campaigns</CardTitle>
+                    <CardDescription>Monitor your campaign performance</CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    View All
+                    <ExternalLink className="ml-2 h-3 w-3" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {campaigns.map((campaign, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3">
+                          <h3 className="font-medium text-foreground">{campaign.name}</h3>
+                          <Badge variant={campaign.status === 'Active' ? 'default' : 'secondary'}>
+                            {campaign.status}
+                          </Badge>
+                        </div>
+                        <div className="flex space-x-6 mt-2 text-sm text-muted-foreground">
+                          <span>Revenue: {campaign.revenue}</span>
+                          <span>Clicks: {campaign.clicks.toLocaleString()}</span>
+                          <span>CTR: {campaign.ctr}</span>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        <BarChart3 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Top Offers */}
+          <div>
+            <Card className="shadow-soft">
+              <CardHeader>
+                <CardTitle>Featured Offers</CardTitle>
+                <CardDescription>High-converting opportunities</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {offers.map((offer, index) => (
+                  <div key={index} className="p-4 border border-border rounded-lg">
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-medium text-sm text-foreground leading-tight">{offer.title}</h4>
+                      {offer.trending && (
+                        <Badge variant="secondary" className="ml-2 text-xs">
+                          <ArrowUpRight className="h-3 w-3 mr-1" />
+                          Trending
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="space-y-2 text-xs text-muted-foreground">
+                      <div className="flex justify-between">
+                        <span>Commission:</span>
+                        <span className="font-medium text-foreground">{offer.commission}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Payout:</span>
+                        <span className="font-medium text-foreground">{offer.payout}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Category:</span>
+                        <Badge variant="outline" className="text-xs">{offer.category}</Badge>
+                      </div>
+                    </div>
+                    <Button size="sm" variant="outline" className="w-full mt-3">
+                      Get Link
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card className="feature-card">
+            <CardHeader className="text-center">
+              <Target className="h-8 w-8 text-accent mx-auto mb-2" />
+              <CardTitle className="text-lg">Campaign Builder</CardTitle>
+              <CardDescription>Create and launch new campaigns with our intuitive builder</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button className="accent-button">
+                Start Building
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="feature-card">
+            <CardHeader className="text-center">
+              <Users className="h-8 w-8 text-accent mx-auto mb-2" />
+              <CardTitle className="text-lg">Network Growth</CardTitle>
+              <CardDescription>Expand your affiliate network and find new partners</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button variant="outline">
+                Browse Partners
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="feature-card">
+            <CardHeader className="text-center">
+              <BarChart3 className="h-8 w-8 text-accent mx-auto mb-2" />
+              <CardTitle className="text-lg">Advanced Analytics</CardTitle>
+              <CardDescription>Dive deep into your performance metrics and insights</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button variant="outline">
+                View Reports
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };
